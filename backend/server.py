@@ -7,8 +7,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel  
 import os
 from typing import Optional
-from explain import explain_code
-from convert import convert_code
+from .explain import explain_code
+from .convert import convert_code
 # Ensure the required packages are installed
 # Create a FastAPI app instance
 app = FastAPI()

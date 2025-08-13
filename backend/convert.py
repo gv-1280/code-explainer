@@ -10,9 +10,9 @@ import os
 from typing import Optional
 import requests
 def convert_code(code: str, source_language: str, target_language: str) -> str:
-    api_key = os.getenv("CONVERT_API_KEY")
+    api_key = os.getenv("API_KEY")
     if not api_key:
-        raise ValueError("CONVERT_API_KEY environment variable is not set")
+        raise ValueError("API_KEY environment variable is not set")
     url = "https://api.openrouter.ai/v1/convert"
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -20,6 +20,7 @@ def convert_code(code: str, source_language: str, target_language: str) -> str:
     }
     payload = {
         "code": code,
+        "model": "deepseek/deepseek-r1:free",  
         "source_language": source_language,
         "target_language": target_language
     }
@@ -54,6 +55,6 @@ def health_check():
     return {"status": "ok"}
 # Ensure the environment variables are set for API keys
 if not os.getenv("CONVERT_API_KEY"):
-    raise ValueError("CONVERT_API_KEY environment variable is not set")
+    raise ValueError("API_KEY environment variable is not set")
 # Run the FastAPI app using uvicorn
 # Use the command: uvicorn FastAPI:app --reload
