@@ -9,43 +9,49 @@ import os
 from typing import Optional
 from .explain import explain_code
 from .convert import convert_code
-# Ensure the required packages are installed
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Create a FastAPI app instance
-app = FastAPI()
+app = FastAPI(title="Code Explainer and Converter", version="1.0.0")
+
 class ExplainRequest(BaseModel):
     code: str
-    
-# Optional audience level for the explanation
+    audience_level: Optional[str] = "beginner"  # Default to beginner if not provided
+
 class ConvertRequest(BaseModel):
     code: str
     source_language: str
     target_language: str
-    audience_level: Optional[str] = None
 
 # Endpoint to explain code
 @app.post("/explain")
 async def explain(request: ExplainRequest):
+    """Explain the provided code for the specified audience level"""
     try:
         explanation = explain_code(request.code, request.audience_level)
         return {"explanation": explanation}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 # Endpoint to convert code from one language to another
 @app.post("/convert")
 async def convert(request: ConvertRequest):
+    """Convert code from source language to target language"""
     try:
         converted_code = convert_code(request.code, request.source_language, request.target_language)
         return {"converted_code": converted_code}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 # Health check endpoint
 @app.get("/healthz")
 def health_check():
+    """Health check endpoint"""
     return {"status": "ok"}
+
 # Ensure the environment variables are set for API keys
+api_key = os.getenv("API_KEY")
 if not os.getenv("API_KEY"):
     raise ValueError("API_KEY environment variable is not set")
-if not os.getenv("CONVERT_API_KEY"):
-    raise ValueError("CONVERT_API_KEY environment variable is not set")
-# Run the FastAPI app using uvicorn
-# Use the command: uvicorn FastAPI:app --reload
