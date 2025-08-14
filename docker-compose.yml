@@ -1,0 +1,20 @@
+services:
+  ai-code-assistant:
+    build: .
+    container_name: ai-code-assistant
+    ports:
+      - "8000:8000"  # FastAPI backend
+      - "8501:8501"  # Streamlit frontend
+    environment:
+      - API_KEY=${API_KEY}
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs  
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
