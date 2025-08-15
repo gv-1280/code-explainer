@@ -23,18 +23,17 @@ def convert_code(code: str, source_language: str, target_language: str) -> str:
     Returns:
         str: Converted code
     """
-    api_key = os.getenv("API_KEY")  # Using same API_KEY as explain
+    api_key = os.getenv("API_KEY")  # Using same API_KEY 
     if not api_key:
         raise ValueError("API_KEY environment variable is not set")
     
-    # Use the correct OpenRouter API endpoint for chat completions
     url = "https://openrouter.ai/api/v1/chat/completions"
     
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:8000",  # Required by OpenRouter
-        "X-Title": "Code Converter"  # Optional but recommended
+        "HTTP-Referer": "http://localhost:8000",  
+        "X-Title": "Code Converter"  
     }
     
     payload = {

@@ -35,8 +35,8 @@ def explain_code(code: str, audience_level: Optional[str] = "Beginner") -> str:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:8000",  # Required by OpenRouter
-        "X-Title": "Code Explainer"  # Optional but recommended
+        "HTTP-Referer": "http://localhost:8000",  
+        "X-Title": "Code Explainer" 
     }
     
     payload = {
@@ -59,7 +59,6 @@ def explain_code(code: str, audience_level: Optional[str] = "Beginner") -> str:
         response.raise_for_status()
         data = response.json()
         
-        # Debug: Print the response for troubleshooting
         print(f"OpenRouter API Response: {data}")
         
         # Extract the explanation from the response
