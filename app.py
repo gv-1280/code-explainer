@@ -12,7 +12,7 @@ import requests
 import json
 
 # FastAPI backend URL
-BACKEND_URL = "https://fastapibce.onrender.com" # Updated to match the new backend URL
+BACKEND_URL = "http://127.0.0.1:8000" # Updated to match the new backend URL
 def check_backend_health():
     """Check if the backend is running"""
     try:
